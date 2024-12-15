@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.f855e6bc.css",
-    "main.js": "/static/js/main.8992041e.js",
-    "static/js/453.d90e06cc.chunk.js": "/static/js/453.d90e06cc.chunk.js",
-    "index.html": "/index.html",
-    "main.f855e6bc.css.map": "/static/css/main.f855e6bc.css.map",
-    "main.8992041e.js.map": "/static/js/main.8992041e.js.map",
-    "453.d90e06cc.chunk.js.map": "/static/js/453.d90e06cc.chunk.js.map"
+    "main.css": "/rifeapp.github.io/static/css/main.f855e6bc.css",
+    "main.js": "/rifeapp.github.io/static/js/main.333cf3df.js",
+    "static/js/453.d90e06cc.chunk.js": "/rifeapp.github.io/static/js/453.d90e06cc.chunk.js",
+    "index.html": "/rifeapp.github.io/index.html",
+    "main.f855e6bc.css.map": "/rifeapp.github.io/static/css/main.f855e6bc.css.map",
+    "main.333cf3df.js.map": "/rifeapp.github.io/static/js/main.333cf3df.js.map",
+    "453.d90e06cc.chunk.js.map": "/rifeapp.github.io/static/js/453.d90e06cc.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f855e6bc.css",
-    "static/js/main.8992041e.js"
+    "static/js/main.333cf3df.js"
   ]
 }
