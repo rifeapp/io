@@ -1,36 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>页面未找到</title>
-  <script>
-    (function() {
-      var path = window.location.pathname + window.location.search + window.location.hash;
-
-      // 检查是否已经进入了 "/io/"，避免重复跳转
-      if (!path.startsWith("/io/")) {
-        window.location.replace("/io" + path);
-      }
-    })();
-  </script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-    }
-    h1 {
-      font-size: 2em;
-      color: #333;
-    }
-    p {
-      font-size: 1.2em;
-      color: #666;
-    }
-  </style>
+  <meta http-equiv="refresh" content="0; url=./index.html" />
 </head>
-<body>
-<h1>404 - 页面未找到</h1>
-<p>如果没有自动跳转，请 <a href="/io/">点击这里返回首页</a></p>
-</body>
+<body></body>
 </html>
