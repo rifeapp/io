@@ -1,7 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
-  <meta http-equiv="refresh" content="0; url=./index.html" />
+  <meta charset="UTF-8">
+  <title>页面未找到</title>
+  <script>
+    (function() {
+      var path = window.location.pathname + window.location.search + window.location.hash;
+      // 检查路径是否以 '/io/' 开头，避免重复重定向
+      if (!path.startsWith('/io/')) {
+        // 构建新的路径，去掉 'index.html'，并保留原始路径
+        var newPath = '/io' + path.replace('/index.html', '');
+        // 使用 replaceState 修改地址栏 URL，但不重新加载页面
+        window.history.replaceState(null, '', newPath);
+        // 重定向到新的路径
+        window.location.replace(newPath);
+      }
+    })();
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 2em;
+      color: #333;
+    }
+    p {
+      font-size: 1.2em;
+      color: #666;
+    }
+  </style>
 </head>
-<body></body>
+<body>
+<h1>404 - 页面未找到</h1>
+<p>如果没有自动跳转，请 <a href="/io/">点击这里返回首页</a></p>
+</body>
 </html>
