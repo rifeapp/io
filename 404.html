@@ -2,12 +2,14 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=./">
   <title>页面未找到</title>
+  <meta http-equiv="refresh" content="0;url=/io/">
   <script>
     (function() {
       var path = window.location.pathname + window.location.search + window.location.hash;
-      window.location.replace("." + path);
+      // 只保留相对路径，避免重复添加
+      var newPath = path.startsWith("/io/") ? path : "/io" + path;
+      window.location.replace(newPath);
     })();
   </script>
   <style>
@@ -28,6 +30,6 @@
 </head>
 <body>
 <h1>404 - 页面未找到</h1>
-<p>如果没有自动跳转，请 <a href="./">点击这里返回首页</a></p>
+<p>如果没有自动跳转，请 <a href="/io/">点击这里返回首页</a></p>
 </body>
 </html>
