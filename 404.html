@@ -1,40 +1,40 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>页面未找到</title>
-  <script>
-    (function() {
-      var path = window.location.pathname + window.location.search + window.location.hash;
-      // 检查路径是否以 '/io/' 开头，避免重复重定向
-      if (!path.startsWith('/io/')) {
-        // 构建新的路径，去掉 'index.html'，并保留原始路径
-        var newPath = '/io' + path.replace('/index.html', '');
-        // 使用 replaceState 修改地址栏 URL，但不重新加载页面
-        window.history.replaceState(null, '', newPath);
-        // 重定向到新的路径
-        window.location.replace(newPath);
-      }
-    })();
+  <meta charset="utf-8">
+  <title>Rife Pay</title>
+  <script type="text/javascript">
+    // Single Page Apps for GitHub Pages
+    // MIT License
+    // https://github.com/rafgraph/spa-github-pages
+    // This script takes the current url and converts the path and query
+    // string into just a query string, and then redirects the browser
+    // to the new url with only a query string and hash fragment,
+    // e.g. https://www.foo.tld/one/two?a=b&c=d#qwe, becomes
+    // https://www.foo.tld/?/one/two&a=b~and~c=d#qwe
+    // Note: this 404.html file must be at least 512 bytes for it to work
+    // with Internet Explorer (it is currently > 512 bytes)
+
+    // If you're creating a Project Pages site and NOT using a custom domain,
+    // then set pathSegmentsToKeep to 1 (enterprise users may need to set it to > 1).
+    // This way the code will only replace the route part of the path, and not
+    // the real directory in which the app resides, for example:
+    // https://username.github.io/repo-name/one/two?a=b&c=d#qwe becomes
+    // https://username.github.io/repo-name/?/one/two&a=b~and~c=d#qwe
+    // Otherwise, leave pathSegmentsToKeep as 0.
+    var pathSegmentsToKeep = 0;
+
+    var l = window.location;
+    l.replace(
+            l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+            l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+            l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+            (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+            l.hash
+    );
+
   </script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-    }
-    h1 {
-      font-size: 2em;
-      color: #333;
-    }
-    p {
-      font-size: 1.2em;
-      color: #666;
-    }
-  </style>
 </head>
 <body>
-<h1>404 - 页面未找到</h1>
-<p>如果没有自动跳转，请 <a href="/io/">点击这里返回首页</a></p>
 </body>
 </html>
