@@ -8,6 +8,7 @@
     <mapping directory="$PROJECT_DIR$/backend/NotificationNReminderService" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/backend/PaymentNTranscationService" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/backend/UserAccountManagementService" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/backstage" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/frontend" vcs="Git" />
   </component>
 </project>
