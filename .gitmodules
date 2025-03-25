@@ -4,6 +4,4 @@
 [submodule "frontend"]
 	path = frontend
 	url = https://github.com/rifeapp/rife-frontend.git
-[submodule "backstage"]
-	path = backstage
-	url = https://github.com/rifeapp/backstage.git
+
