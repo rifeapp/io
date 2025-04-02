@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bill Splitting Form</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #1A1B1E;
+            color: #E6EDF3;
+            overflow: hidden;
+        }
+
+        #root {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            color: #2DD4BF;
+        }
+
+        #error {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            background-color: rgba(255,0,0,0.1);
+            border-radius: 4px;
+            padding: 10px;
+            display: none;
+        }
+
+        * {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        input, button, a {
+            cursor: pointer;
+            -webkit-appearance: none;
+            -webkit-touch-callout: none;
+        }
+
+        button {
+            padding: 12px !important;
+            min-height: 48px !important;
+        }
+
+        input[type="number"] {
+            font-size: 16px !important; /* Prevent iOS zoom */
+        }
+    </style>
+    <!-- Load React and other libraries -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@emotion/react@11.11.0/dist/emotion-react.umd.min.js"></script>
+    <script src="https://unpkg.com/@emotion/styled@11.11.0/dist/emotion-styled.umd.min.js"></script>
+    <script src="https://unpkg.com/@mui/material@5.13.0/umd/material-ui.production.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<div id="loading">Loading...</div>
+<div id="error"></div>
+
+<script>
+    // Create theme
+    const theme = MaterialUI.createTheme({
+        palette: {
+            mode: 'dark',
+            primary: {
+                main: '#2DD4BF'
+            },
+            secondary: {
+                main: '#6b47ff'
+            },
+            background: {
+                default: '#1A1B1E',
+                paper: 'rgba(26, 27, 30, 0.8)'
+            }
+        }
+    });
+
+    // Bill splitting form component
+    function BillSplittingForm() {
+        const { useState } = React;
+        const { Box, Typography, TextField, Button, Paper, Stack, Chip, Snackbar, Alert } = MaterialUI;
+
+        const [billName, setBillName] = useState('');
+        const [amount, setAmount] = useState('');
+        const [personCount, setPersonCount] = useState(2);
+        const [showSnackbar, setShowSnackbar] = useState(false);
+        const [generatedLink, setGeneratedLink] = useState('');
+        const [isSubmitting, setIsSubmitting] = useState(false);
+
+        // Check if mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        const handleSubmit = () => {
+            if (!billName || !amount || Number(amount) <= 0) {
+                alert('Please complete all fields and ensure the amount is greater than 0');
+                return;
+            }
+
+            setIsSubmitting(true);
+
+            // Simulate API call
+            setTimeout(() => {
+                const randomString = Math.random().toString(36).substring(2, 10);
+                const link = `https://rife.app/split/${randomString}`;
+                setGeneratedLink(link);
+                setShowSnackbar(true);
+                setIsSubmitting(false);
+            }, 800);
+        };
+
+        const handleCloseSnackbar = () => {
+            setShowSnackbar(false);
+        };
+
+        const copyToClipboard = () => {
+            navigator.clipboard.writeText(generatedLink)
+                .then(() => {
+                    alert('Link copied to clipboard');
+                })
+                .catch(err => {
+                    console.error('Copy failed:', err);
+                });
+        };
+
+        // Calculate per person amount
+        const perPersonAmount = amount && personCount
+            ? (Number(amount) / Number(personCount)).toFixed(2)
+            : '0.00';
+
+        return React.createElement(Box, {
+            sx: {
+                p: isMobile ? 2 : 3,
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundImage: 'linear-gradient(135deg, rgba(45, 212, 191, 0.05) 0%, rgba(107, 71, 255, 0.05) 100%)'
+            }
+        }, [
+            // Header
+            React.createElement(Box, {
+                key: 'header',
+                sx: {
+                    mb: 3,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                }
+            }, [
+                React.createElement(Typography, {
+                    key: 'logo',
+                    variant: isMobile ? 'h6' : 'h5',
+                    sx: {
+                        fontWeight: 'bold',
+                        background: 'linear-gradient(90deg, #2DD4BF 0%, #6b47ff 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        mb: 1
+                    }
+                }, 'Create a link for Bill Splitting'),
+                React.createElement(Typography, {
+                    key: 'subtitle',
+                    variant: 'subtitle2',
+                    sx: {
+                        color: 'text.secondary',
+                        letterSpacing: '0.5px'
+                    }
+                }, 'Split Bills Effortlessly')
+            ]),
+
+            // Main form container
+            React.createElement(Paper, {
+                key: 'formPaper',
+                elevation: 0,
+                sx: {
+                    p: isMobile ? 2 : 3,
+                    borderRadius: 2,
+                    border: '1px solid',
+                    borderColor: 'rgba(45, 212, 191, 0.2)',
+                    bgcolor: 'rgba(26, 27, 30, 0.8)',
+                    backdropFilter: 'blur(8px)',
+                    flex: 1,
+                    overflow: 'auto'
+                }
+            }, [
+                // Form container
+                React.createElement(Stack, {
+                    key: 'form',
+                    spacing: 3
+                }, [
+                    // Bill name input
+                    React.createElement(TextField, {
+                        key: 'billName',
+                        label: 'Bill Name',
+                        value: billName,
+                        onChange: (e) => setBillName(e.target.value),
+                        fullWidth: true,
+                        variant: 'outlined',
+                        placeholder: 'e.g., Dinner, Movie Tickets',
+                        size: 'small',
+                        inputProps: {
+                            style: { fontSize: isMobile ? '16px' : 'inherit' }
+                        }
+                    }),
+
+                    // Total amount input
+                    React.createElement(TextField, {
+                        key: 'amount',
+                        label: 'Total Amount',
+                        type: 'number',
+                        value: amount,
+                        onChange: (e) => setAmount(e.target.value),
+                        fullWidth: true,
+                        variant: 'outlined',
+                        placeholder: 'Enter total amount',
+                        size: 'small',
+                        InputProps: {
+                            startAdornment: React.createElement('span', { style: { marginRight: 8 } }, '£'),
+                            style: { fontSize: isMobile ? '16px' : 'inherit' }
+                        }
+                    }),
+
+                    // Number of people input
+                    React.createElement(TextField, {
+                        key: 'personCount',
+                        label: 'Number of People',
+                        type: 'number',
+                        value: personCount,
+                        onChange: (e) => setPersonCount(Math.max(1, parseInt(e.target.value) || 1)),
+                        fullWidth: true,
+                        variant: 'outlined',
+                        size: 'small',
+                        inputProps: {
+                            min: 1,
+                            style: { fontSize: isMobile ? '16px' : 'inherit' }
+                        }
+                    }),
+
+                    // Per person amount display
+                    React.createElement(Box, {
+                        key: 'perPersonAmount',
+                        sx: {
+                            p: 2,
+                            bgcolor: 'rgba(45, 212, 191, 0.1)',
+                            borderRadius: 2,
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            border: '1px solid',
+                            borderColor: 'rgba(45, 212, 191, 0.2)'
+                        }
+                    }, [
+                        React.createElement(Typography, {
+                            key: 'amountLabel',
+                            variant: 'body2',
+                            sx: { fontWeight: 'medium' }
+                        }, 'Amount per person:'),
+                        React.createElement(Chip, {
+                            key: 'amountValue',
+                            label: `£${perPersonAmount}`,
+                            color: 'primary',
+                            sx: {
+                                fontWeight: 'bold',
+                                background: 'linear-gradient(90deg, #2DD4BF 0%, #6b47ff 100%)'
+                            }
+                        })
+                    ]),
+
+                    // Submit button
+                    React.createElement(Button, {
+                        key: 'submitBtn',
+                        variant: 'contained',
+                        onClick: handleSubmit,
+                        disabled: isSubmitting,
+                        sx: {
+                            mt: 1,
+                            py: 1.5,
+                            padding: isMobile ? '14px' : '12px',
+                            minHeight: isMobile ? '50px' : '48px',
+                            background: 'linear-gradient(90deg, #2DD4BF 0%, #6b47ff 100%)',
+                            '&:hover': {
+                                background: 'linear-gradient(90deg, #25b5a3 0%, #5a3be0 100%)'
+                            }
+                        }
+                    }, isSubmitting ? 'Generating...' : 'Generate Bill Splitting Link')
+                ])
+            ]),
+
+            // Footer
+            React.createElement(Box, {
+                key: 'footer',
+                sx: {
+                    mt: 2,
+                    textAlign: 'center',
+                    opacity: 0.7
+                }
+            }, [
+                React.createElement(Typography, {
+                    key: 'footerText',
+                    variant: 'caption',
+                    sx: { color: 'text.secondary' }
+                }, '© 2025 Rife Technologies Ltd')
+            ]),
+
+            // Success notification
+            React.createElement(Snackbar, {
+                    key: 'snackbar',
+                    open: showSnackbar,
+                    autoHideDuration: 6000,
+                    onClose: handleCloseSnackbar,
+                    anchorOrigin: { vertical: 'bottom', horizontal: 'center' }
+                },
+                React.createElement(Alert, {
+                    onClose: handleCloseSnackbar,
+                    severity: 'success',
+                    variant: 'filled',
+                    sx: { width: '100%' },
+                    action: React.createElement(Button, {
+                        color: 'inherit',
+                        size: 'small',
+                        onClick: copyToClipboard
+                    }, 'Copy')
+                }, `Link generated: ${generatedLink}`)
+            )
+        ]);
+    }
+
+    // Root app component
+    function BillSplittingApp() {
+        const { ThemeProvider } = MaterialUI;
+
+        return React.createElement(ThemeProvider, { theme: theme },
+            React.createElement(BillSplittingForm)
+        );
+    }
+
+    // Render the app
+    try {
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(BillSplittingApp));
+        document.getElementById('loading').style.display = 'none';
+    } catch (error) {
+        console.error('Application rendering failed:', error);
+        document.getElementById('error').textContent = 'Application rendering failed: ' + error.message;
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('loading').style.display = 'none';
+    }
+</script>
+</body>
+</html>
+
